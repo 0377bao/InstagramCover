@@ -23,6 +23,14 @@ export default function TabBar() {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
+                tabBarStyle: {
+                    height: 88,
+                    borderTopWidth: 1,
+                    borderTopColor: theme.border,
+                    borderTopStyle: 'solid',
+                },
+                tabBarActiveTintColor: theme.text,
+                tabBarInactiveTintColor: theme.text,
                 tabBarIcon: ({ focused, color, size }) => {
                     let IconName;
 
@@ -46,10 +54,6 @@ export default function TabBar() {
                     return IconName;
                 },
             })}
-            tabBarOptions={{
-                activeTintColor: theme.text, // Màu icon khi tab được chọn
-                inactiveTintColor: theme.text, // Màu icon khi tab không được chọn
-            }}
         >
             <Tab.Screen
                 name="Home"
@@ -73,6 +77,7 @@ export default function TabBar() {
                 options={{
                     headerShown: false,
                     tabBarLabel: '',
+                    tabBarStyle: { display: 'none' },
                 }}
             />
             <Tab.Screen

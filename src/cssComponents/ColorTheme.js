@@ -1,7 +1,9 @@
 export const themeLight = {
     text: '#000',
+    textSupport: '#555',
+    textReverse: '#fff',
     color: '#000',
-    border: '#000',
+    border: 'rgba(219, 219, 219, 0.3)',
     link: 'blue',
     hover: 'lightblue',
 };
