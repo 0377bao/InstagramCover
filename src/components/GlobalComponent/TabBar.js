@@ -24,10 +24,11 @@ export default function TabBar() {
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarStyle: {
-                    height: 88,
+                    height: 50,
                     borderTopWidth: 1,
                     borderTopColor: theme.border,
                     borderTopStyle: 'solid',
+
                 },
                 tabBarActiveTintColor: theme.text,
                 tabBarInactiveTintColor: theme.text,

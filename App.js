@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabBar from './src/components/GlobalComponent/TabBar';
 import Notification from './src/pages/Notification';
-
+import Research from './src/pages/Research';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -19,5 +19,6 @@ export default function App() {
                 <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
+        // <Research />
     );
 }
