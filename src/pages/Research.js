@@ -25,10 +25,10 @@ export default function Research() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <SreachBox />
-                    <SreachContext />
-                </ScrollView>
+
+                <SreachBox />
+                <SreachContext />
+
             </View>
         </SafeAreaView>
     );
