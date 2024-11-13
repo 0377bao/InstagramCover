@@ -4,9 +4,9 @@ import PostItem from './PostItem';
 
 const ListData = [
     {
-        avt: 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/465790052_874791554817935_2691514773587584132_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Miy1lyj6oiQQ7kNvgG0BVAE&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=AYlv0Id4N_Rz9ennHGcqGNX&oh=00_AYAMIYECuZakS2uaUexXf8TLKiIl4q5q7X-f0VvjhuSneA&oe=67325EF0',
+        avt: 'https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/466419717_876187764678314_281004042329435226_n.jpg?stp=dst-jpg_p526x296&_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHwtfMXBlah_itoihlTtgYcHlK3KNlyitgeUrco2XKK2OlQB6l1yMJ7Pg3d3KZWDhaNzU84CPp5q7qHE7XIVDRb&_nc_ohc=KwPb19-9KDgQ7kNvgGO9Gi3&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=AgrFFUr2KnRtH0OmI1-q6v3&oh=00_AYCi7XN7tu7rDW1PlEjS01O0Ssx-qu7uOTKbhzUwNLVRuQ&oe=6739D839',
         contents:
-            'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/465790052_874791554817935_2691514773587584132_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Miy1lyj6oiQQ7kNvgG0BVAE&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=AYlv0Id4N_Rz9ennHGcqGNX&oh=00_AYAMIYECuZakS2uaUexXf8TLKiIl4q5q7X-f0VvjhuSneA&oe=67325EF0',
+            'https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/466419717_876187764678314_281004042329435226_n.jpg?stp=dst-jpg_p526x296&_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHwtfMXBlah_itoihlTtgYcHlK3KNlyitgeUrco2XKK2OlQB6l1yMJ7Pg3d3KZWDhaNzU84CPp5q7qHE7XIVDRb&_nc_ohc=KwPb19-9KDgQ7kNvgGO9Gi3&_nc_zt=23&_nc_ht=scontent.fsgn5-14.fna&_nc_gid=AgrFFUr2KnRtH0OmI1-q6v3&oh=00_AYCi7XN7tu7rDW1PlEjS01O0Ssx-qu7uOTKbhzUwNLVRuQ&oe=6739D839',
         name: 'Real madrid',
         isStick: true,
         like: 123000,
