@@ -63,7 +63,7 @@ export default function StoryComponent({ onFinishStory, stories, setShowTabBar }
                             resizeMode: 'cover',
                             borderRadius: 18,
                         }}
-                        source={{ url: story.image }}
+                        source={story.image}
                     />
                 );
             }
@@ -190,6 +190,7 @@ export default function StoryComponent({ onFinishStory, stories, setShowTabBar }
             style={{
                 flex: 1,
                 backgroundColor: '#000',
+                marginTop: 30,
             }}
         >
             <Pressable
@@ -213,7 +214,7 @@ export default function StoryComponent({ onFinishStory, stories, setShowTabBar }
                     }}
                 >
                     {currentStory.type && renderStoryContent(currentStory)}
-                    <SafeAreaView>
+                    <View>
                         <View
                             name="progressBarContainer"
                             style={{
@@ -279,9 +280,7 @@ export default function StoryComponent({ onFinishStory, stories, setShowTabBar }
                                     height: 40,
                                     borderRadius: 50,
                                 }}
-                                source={{
-                                    url: 'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/465790052_874791554817935_2691514773587584132_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Miy1lyj6oiQQ7kNvgG0BVAE&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=AYlv0Id4N_Rz9ennHGcqGNX&oh=00_AYAMIYECuZakS2uaUexXf8TLKiIl4q5q7X-f0VvjhuSneA&oe=67325EF0',
-                                }}
+                                source={require('../../../assets/images/post1.jpg')}
                             />
                             <Text
                                 style={{
@@ -320,7 +319,7 @@ export default function StoryComponent({ onFinishStory, stories, setShowTabBar }
                                 <CloseIcon color={'white'} style={{ marginLeft: 20 }} />
                             </TouchableOpacity>
                         </View>
-                    </SafeAreaView>
+                    </View>
                 </View>
                 <Animated.View
                     style={{

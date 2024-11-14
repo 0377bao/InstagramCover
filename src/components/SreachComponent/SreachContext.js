@@ -62,7 +62,7 @@ const SreachContext = () => {
 
         >
             {loading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator />
             ) : (
                 sreachData.map((item, index) => {
                     return (

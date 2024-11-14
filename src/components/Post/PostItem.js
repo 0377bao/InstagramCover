@@ -4,7 +4,7 @@ import AvtItem from '../GlobalComponent/AvtItem';
 import PostInfor from './PostInfor';
 import { CommentIcon, HeartIcon, HeartRedIcon, ReplyIcon, SaveIcon } from '../icons/icons';
 
-export default function PostItem({ data }) {
+export default function PostItem({ data, openComment, closeComment }) {
     const [liked, setLiked] = useState(data.liked);
 
     return (
@@ -15,7 +15,7 @@ export default function PostItem({ data }) {
                         paddingHorizontal: 10,
                     }}
                 >
-                    <PostInfor isSeen={data.isSeen} image={data.avt} name={data.name} isStick={data.isStick} />
+                    <PostInfor isSeen={data.isSeen} image={data.avt} isUrl={false} name={data.name} isStick={data.isStick} />
                 </View>
                 <View style={{ width: '100%', marginTop: 10 }}>
                     <Image
@@ -25,7 +25,7 @@ export default function PostItem({ data }) {
                             aspectRatio: 1,
                             resizeMode: 'cover',
                         }}
-                        source={{ uri: data.contents }}
+                        source={data.contents}
                     />
                 </View>
                 <View style={{ paddingHorizontal: 10 }}>
@@ -53,7 +53,7 @@ export default function PostItem({ data }) {
                                 {liked ? <HeartRedIcon /> : <HeartIcon />}
                                 <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{data.like}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.flexRow, styles.actionItem]}>
+                            <TouchableOpacity style={[styles.flexRow, styles.actionItem]} onPress={openComment}>
                                 <CommentIcon />
                                 <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{data.comment}</Text>
                             </TouchableOpacity>

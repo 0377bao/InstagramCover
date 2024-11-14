@@ -16,9 +16,6 @@ export default function HeaderHome() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 height: 50,
-                // borderBottomWidth: 1,
-                // borderBottomColor: theme.border,
-                // borderBottomStyle: 'solid',
             }}
         >
             <InstagramIcon color={theme.text} />
