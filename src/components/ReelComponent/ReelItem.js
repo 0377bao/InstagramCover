@@ -1,22 +1,31 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, Dimensions, TouchableOpacity, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import { Video } from 'expo-av';
+import { useFocusEffect } from '@react-navigation/native';
 
-const ReelItem = ({ item, index, currentIndex }) => {
+const ReelItem = ({ item, index, currentIndex, routeName }) => {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
     const videoRef = useRef(null);
 
-
-
     const [mute, setMute] = useState(false);
 
     const [like, setLike] = useState(item.isLike);
-
+    useFocusEffect(
+        React.useCallback(() => {
+            // Khi component được focus (hiện lên)
+            return () => {
+                // Khi component bị blur (rời khỏi màn hình)
+                if (videoRef.current) {
+                    videoRef.current.pauseAsync(); // Tạm dừng video
+                }
+            };
+        }, [])
+    );
     return (
         <View
             style={{
@@ -36,17 +45,18 @@ const ReelItem = ({ item, index, currentIndex }) => {
                     position: 'absolute',
                 }}>
                 <Video
-                    videoRef={videoRef}
-                    repeat={true}
-                    resizeMode="cover"
-                    paused={currentIndex == index ? false : true}
+                    ref={videoRef}
                     source={item.video}
-                    muted={mute}
+                    shouldPlay={currentIndex == index}
+                    isLooping
+                    resizeMode="cover"
+                    isMuted={mute}
                     style={{
                         width: '100%',
                         height: '100%',
                         position: 'absolute',
                     }}
+                    onError={(error) => console.log("Video Error: ", error)}
                 />
             </TouchableOpacity>
             <Ionicons

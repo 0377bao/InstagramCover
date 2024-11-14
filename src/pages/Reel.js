@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import ReelsComponent from '../components/ReelComponent/ReelsComponet';
-const Reels = () => {
+const Reels = ({ route }) => {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
@@ -31,7 +31,7 @@ const Reels = () => {
                 </Text>
                 <Feather name="camera" style={{ fontSize: 25, color: 'white' }} />
             </View>
-            <ReelsComponent />
+            <ReelsComponent route={route} />
         </View>
     );
 };
