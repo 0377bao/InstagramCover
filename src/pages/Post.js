@@ -12,7 +12,7 @@ export default function Post({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [imageChoose, setImageChoose] = useState(null);
     const [content, setContent] = useState("");
-    const [photos, setPhotos] = useState([]);
+    const [photos, setPhotos] = useState();
     const [permission, setPermission] = useState(null);
 
     useEffect(() => {
@@ -22,12 +22,25 @@ export default function Post({ navigation }) {
     const handSubmitPost = async () => {
         try {
             setLoading(true);
-            const res = await axios.post("http://172.16.0.77:3001/api/post/create-post", {
-                content: content,
-                authorId: "67364360c456d45ddcbe223e",
-                image: imageChoose
-            })
-            const response = await res.json();
+            const formData = new FormData();
+            const fileUri = imageChoose.uri;
+            const fileName = fileUri.split('/').pop();
+            formData.append('image', {
+                uri: fileUri,
+                name: fileName,
+                type: 'image/jpeg', // Thay đổi nếu là PNG
+            });
+            formData.append('content', content);
+            formData.append('authorId', "67364360c456d45ddcbe223e");
+
+            const res = await axios.post("http://192.168.1.6:3001/api/post/create-post",
+                formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            },);
+            // const res = await axios.get("http://192.168.1.6:3001/api/account/find-account",)
+            const response = res.data;
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -59,7 +72,7 @@ export default function Post({ navigation }) {
         return (<TouchableOpacity onPress={() => {
             setImageChoose(image);
         }} style={{ padding: 2, width: widthWindow * 0.25, height: widthWindow * 0.25 }}>
-            <Image source={{ uri: image }} style={{ width: '100%', height: '100%' }} />
+            <Image source={{ uri: image.uri }} style={{ width: '100%', height: '100%' }} />
         </TouchableOpacity>)
     }
 
@@ -78,7 +91,7 @@ export default function Post({ navigation }) {
                         </TouchableOpacity>
                     </View>
                     <View style={{ height: "45%", paddingHorizontal: 10 }}>
-                        {imageChoose !== null && <Image style={{ width: '100%', height: '100%' }} source={{ uri: imageChoose }} />}
+                        {imageChoose !== null && <Image style={{ width: '100%', height: '100%' }} source={{ uri: imageChoose.uri }} />}
                     </View>
                     <View style={{ padding: 16 }}>
                         <Text>Viết chú thính hoặc thêm cuộn thăm dò ý kiến...</Text>
@@ -110,9 +123,9 @@ export default function Post({ navigation }) {
                             <FlatList
                                 data={photos}
                                 keyExtractor={(item) => item.id}
-                                numColumns={3}
+                                numColumns={4}
                                 renderItem={({ item }) => (
-                                    <ItemImage image={item.uri} />
+                                    <ItemImage image={item} />
                                 )}
                             />
                         </View>

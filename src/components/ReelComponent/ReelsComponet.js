@@ -4,7 +4,8 @@ import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import ReelItem from './ReelItem';
 
 
-const ReelsComponent = () => {
+const ReelsComponent = ({ route }) => {
+    const routeName = route.name;
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleChangeIndexValue = ({ index }) => {
@@ -50,7 +51,7 @@ const ReelsComponent = () => {
             onChangeIndex={handleChangeIndexValue}
             data={videoData}
             renderItem={({ item, index }) => (
-                <ReelItem item={item} index={index} currentIndex={currentIndex} />
+                <ReelItem item={item} index={index} currentIndex={currentIndex} routeName={routeName} />
             )}
             keyExtractor={(item, index) => index}
         />

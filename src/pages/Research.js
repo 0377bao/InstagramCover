@@ -24,10 +24,10 @@ export default function Research() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View>
+            <View style={{ paddingBottom: 40 }}>
 
                 <SreachBox />
-                <SreachContext />
+                <SreachContext style={{ paddingBottom: 40 }} />
 
             </View>
         </SafeAreaView>
