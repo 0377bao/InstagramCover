@@ -3,9 +3,13 @@ import React, { useState } from 'react';
 import AvtItem from '../GlobalComponent/AvtItem';
 import PostInfor from './PostInfor';
 import { CommentIcon, HeartIcon, HeartRedIcon, ReplyIcon, SaveIcon } from '../icons/icons';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export default function PostItem({ data, openComment, closeComment }) {
-    const [liked, setLiked] = useState(data.liked);
+    const [liked, setLiked] = useState(data.isLike);
+    const [numberLike, setNumberLike] = useState(data.likes.length);
+    const account = useSelector((state) => state.account.information);
     const formatTimeDifference = (createdAt) => {
         const createdDate = new Date(createdAt);
         const now = new Date();
@@ -21,6 +25,19 @@ export default function PostItem({ data, openComment, closeComment }) {
         if (diffInMinutes > 0) return `${diffInMinutes} phút trước`;
         return `${diffInSeconds} giây trước`;
     };
+
+    const handSubmitLike = async () => {
+        try {
+            const res = await axios.post("http://10.0.2.2:3001/api/post/like-post",
+                {
+                    authorId: account._id,
+                    postId: data._id
+                },);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <View name="wrapper" style={{ marginTop: 16 }}>
@@ -57,16 +74,17 @@ export default function PostItem({ data, openComment, closeComment }) {
                             <TouchableOpacity
                                 onPress={() => {
                                     if (liked) {
-                                        data.like -= 1;
+                                        setNumberLike((state) => state - 1);
                                     } else {
-                                        data.like += 1;
+                                        setNumberLike((state) => state + 1);
                                     }
                                     setLiked(!liked);
+                                    handSubmitLike();
                                 }}
                                 style={[styles.flexRow, styles.actionItem]}
                             >
                                 {liked ? <HeartRedIcon /> : <HeartIcon />}
-                                <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{data.likes.length}</Text>
+                                <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{numberLike}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.flexRow, styles.actionItem]} onPress={() => {
                                 openComment(data.comments, data._id)

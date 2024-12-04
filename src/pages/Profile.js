@@ -4,9 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileContext } from '../components/ProfileComponent/ProfileContext';
 import Entypo from 'react-native-vector-icons/Entypo';
 import TabProfile from '../components/ProfileComponent/TabProfile';
+import { useSelector } from 'react-redux';
 export default function Profile() {
     let circuls = [];
     let numberofcircels = 8;
+    const account = useSelector((state) => state.account.information);
 
     for (let index = 0; index < numberofcircels; index++) {
         circuls.push(
@@ -44,12 +46,12 @@ export default function Profile() {
         <SafeAreaView style={{ width: '100%', height: '100%', backgroundColor: 'white' }}>
             <View>
                 <ProfileContext
-                    name="Cuoc Ba"
-                    accountName="dat_huong"
-                    profileImage={require('../../assets/images/avt1.jpg')}
+                    name={account.username}
+                    accountName={account.username}
+                    profileImage={{ uri: account.avt }}
                     followers="3.6M"
                     following="35"
-                    post="458"
+                    post={account.posts.length}
                 />
             </View>
             <View>

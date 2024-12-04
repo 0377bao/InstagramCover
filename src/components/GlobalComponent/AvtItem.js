@@ -40,7 +40,7 @@ export default function AvtItem({ image, isSeen = false, idStory, isUser = false
                                 height: '100%',
                                 borderRadius: 99,
                             }}
-                            source={{ url: image }}
+                            source={{ uri: image }}
                         />
                     ) : (
                         <Image

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PostItem from './PostItem';
 import PostComment from './PostComment';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 // const ListData = [
 //     {
@@ -53,13 +54,16 @@ export default function PostHome({ openComment, closeComment, headerComponent })
     const [listData, setListData] = useState([]); // Dữ liệu từ API
     const [loading, setLoading] = useState(false);
     const [indexLoad, setIndexLoad] = useState(1);
+    const [onceLoad, setOnceLoad] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const account = useSelector((state) => state.account.information);
+
 
     // Hàm gọi API để lấy dữ liệu
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`http://10.0.2.2:3001/api/post/find-post?page=1&authorId=6746cce7f2e4901625aa7f07`,
+            const response = await axios.get(`http://10.0.2.2:3001/api/post/find-post?page=${indexLoad}&authorId=${account._id}`,
                 {
                     headers: {
                         Accept: 'application/json',
@@ -71,6 +75,7 @@ export default function PostHome({ openComment, closeComment, headerComponent })
         } catch (error) {
             console.error(error);
         } finally {
+            setOnceLoad(false);
             setLoading(false);
         }
     };
@@ -90,10 +95,6 @@ export default function PostHome({ openComment, closeComment, headerComponent })
 
     return (
         <View style={{ paddingBottom: 30 }}>
-            {/* {ListData.map((item, index) => (
-                <PostItem openComment={openComment} closeComment={closeComment} key={index} data={item} />
-            ))} */}
-
             <FlatList
                 ListHeaderComponent={headerComponent}
                 style
@@ -101,13 +102,15 @@ export default function PostHome({ openComment, closeComment, headerComponent })
                 renderItem={({ item, index }) => <PostItem openComment={openComment} closeComment={closeComment} key={index} data={item} />}
                 keyExtractor={(item, index) => index.toString()}
                 contentContainerStyle={{ paddingBottom: 70 }}
-                onEndReached={handelLoadMore}
+                onEndReached={onceLoad && listData.length !== 0 ? handelLoadMore : null}
                 ListFooterComponent={loading && <ActivityIndicator size="large" color="#0000ff" />}
                 ListFooterComponentStyle={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                 }
             />
+
+
         </View>
     );
 }

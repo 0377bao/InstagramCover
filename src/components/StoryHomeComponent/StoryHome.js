@@ -1,8 +1,10 @@
 import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
 import StoryItem from './StoryItem';
+import { useSelector } from 'react-redux';
 
 export default function StoryHome({ author, list, openStory }) {
+    const account = useSelector((state) => state.account.information);
     return (
         <View
             style={{
@@ -15,9 +17,8 @@ export default function StoryHome({ author, list, openStory }) {
                     isUser={true}
                     data={{
                         name: 'Tin của bạn',
-                        image: require("../../../assets/images/post1.jpg"),
+                        image: account.avt,
                     }}
-                    isUrl={false}
                     openStory={openStory}
                 />
                 {list.map((item, index) => (

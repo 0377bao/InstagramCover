@@ -1,25 +1,32 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Image, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Ionic from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 const TabProfile = () => {
     const Tab = createMaterialTopTabNavigator();
+    const account = useSelector((state) => state.account.information);
+
+    const widthWindow = Dimensions.get('window').width;
 
     let squares = [];
-    let numberOfSquare = 7;
 
-    for (let index = 0; index < numberOfSquare; index++) {
+
+    for (let index = 0; index < account.posts.length; index++) {
         squares.push(
-            <View key={index}>
+            <View key={index} style={{
+                width: widthWindow * 0.33333333,
+            }}>
                 <View
                     style={{
-                        width: 130,
+                        width: "100%",
                         height: 150,
-                        marginVertical: 0.5,
-                        backgroundColor: 'black',
-                        opacity: 0.1,
-                    }}></View>
+                        padding: 3,
+                        backgroundColor: 'white',
+                    }}>
+                    <Image source={{ uri: account.posts[index].image[0] }} style={{ with: "100%", height: "100%" }} />
+                </View>
             </View>,
         );
     }
@@ -40,7 +47,6 @@ const TabProfile = () => {
                         flexWrap: 'wrap',
                         flexDirection: 'row',
                         paddingVertical: 5,
-                        justifyContent: 'space-between',
                     }}>
                     {squares}
                 </View>

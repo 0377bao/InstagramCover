@@ -14,9 +14,11 @@ export default function PostCommentItem({ data }) {
         const diffInHours = Math.floor(diffInMinutes / 60);
         const diffInDays = Math.floor(diffInHours / 24);
 
+
         if (diffInDays > 0) return `${diffInDays} ngày trước`;
         if (diffInHours > 0) return `${diffInHours} giờ trước`;
         if (diffInMinutes > 0) return `${diffInMinutes} phút trước`;
+        if (diffInSeconds < 0) return 'Vừa xong';
         return `${diffInSeconds} giây trước`;
     };
 

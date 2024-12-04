@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons/icons';
 import * as MediaLibrary from 'expo-media-library';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateAccount } from '../features/account/accountSlice';
 
 const widthWindow = Dimensions.get('window').width;
 
@@ -14,6 +16,8 @@ export default function Post({ navigation }) {
     const [content, setContent] = useState("");
     const [photos, setPhotos] = useState();
     const [permission, setPermission] = useState(null);
+    const account = useSelector((state) => state.account.information);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         requestPermission();
@@ -31,7 +35,7 @@ export default function Post({ navigation }) {
                 type: 'image/jpeg', // Thay đổi nếu là PNG
             });
             formData.append('content', content);
-            formData.append('authorId', "67364360c456d45ddcbe223e");
+            formData.append('authorId', account._id);
 
             const res = await axios.post("http://10.0.2.2:3001/api/post/create-post",
                 formData, {
@@ -46,9 +50,15 @@ export default function Post({ navigation }) {
             console.log(error);
         } finally {
             setLoading(false);
+            handleUpdateAfterPost();
             navigation.navigate("Home");
         }
 
+    }
+
+    const handleUpdateAfterPost = async () => {
+        const res = await axios.get("http://10.0.2.2:3001/api/account/detail-account/" + account._id);
+        dispatch(updateAccount(res.data.data));
     }
 
     const requestPermission = async () => {

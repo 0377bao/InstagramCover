@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import PostCommentItem from './PostCommentItem';
 import { themeLight } from '../../cssComponents/ColorTheme';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 // const data = [
 //     {
@@ -62,6 +63,7 @@ export default function PostComment({ closeComment, data }) {
     const screenHeight = Dimensions.get('window').height;
     const [loading, setLoading] = useState(false);
     const [comments, setComments] = useState(data.comments);
+    const account = useSelector((state) => state.account.information);
 
     const handSubmitComment = async () => {
 
@@ -69,10 +71,12 @@ export default function PostComment({ closeComment, data }) {
             setLoading(true);
             const res = await axios.post("http://10.0.2.2:3001/api/comment/create-comment",
                 {
-                    account: "6746cce7f2e4901625aa7f07",
+                    account: account._id,
                     content: content,
                     postId: data.id
                 },);
+            console.log(res.data.data);
+
             setComments([...comments, res.data.data]);
 
         } catch (error) {
@@ -82,10 +86,6 @@ export default function PostComment({ closeComment, data }) {
             setLoading(false);
         }
     }
-
-    useEffect(() => {
-        console.log(comments);
-    }, [comments]);
     return (
         <View style={{
             position: 'absolute',
@@ -138,7 +138,7 @@ export default function PostComment({ closeComment, data }) {
                     borderWidth: 1,
                     borderStyle: "solid",
                 }
-                } source={require('../../../assets/images/post1.jpg')} />
+                } source={{ uri: account.avt }} />
                 <TextInput style={{
                     borderColor: '#999',
                     borderWidth: 1,

@@ -13,6 +13,7 @@ import React, { useEffect } from 'react';
 import { useState, useRef } from 'react';
 import { CloseIcon, EclipseIcon, HeartIcon, HeartRedIcon, ReplyIcon } from '../icons/icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useSelector } from 'react-redux';
 
 const { width: widthWindow } = Dimensions.get('window');
 
@@ -26,6 +27,7 @@ export default function StoryComponent({ onFinishStory, stories, setShowTabBar }
     const [wentBack, setWentBack] = useState(0);
     const [isLoved, setIsLoved] = useState(false);
     const bottomValue = useRef(new Animated.Value(0)).current;
+    const account = useSelector((state) => state.account.information);
 
     const handleFocus = () => {
         Animated.timing(bottomValue, {
@@ -280,7 +282,7 @@ export default function StoryComponent({ onFinishStory, stories, setShowTabBar }
                                     height: 40,
                                     borderRadius: 50,
                                 }}
-                                source={require('../../../assets/images/post1.jpg')}
+                                source={{ uri: account.avt }}
                             />
                             <Text
                                 style={{
@@ -290,7 +292,7 @@ export default function StoryComponent({ onFinishStory, stories, setShowTabBar }
                                     fontWeight: 'bold',
                                 }}
                             >
-                                ngoc.inaa
+                                {account.username}
                             </Text>
                             <Text
                                 style={{
