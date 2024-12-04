@@ -50,7 +50,7 @@ export default function PostInfor({ isSeen = false, isUrl = true, image, name, i
                                     height: '100%',
                                     borderRadius: 99,
                                 }}
-                                source={{ url: image }}
+                                source={{ uri: image }}
                             />
                         ) : (
                             <Image

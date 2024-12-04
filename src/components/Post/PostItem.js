@@ -6,6 +6,21 @@ import { CommentIcon, HeartIcon, HeartRedIcon, ReplyIcon, SaveIcon } from '../ic
 
 export default function PostItem({ data, openComment, closeComment }) {
     const [liked, setLiked] = useState(data.liked);
+    const formatTimeDifference = (createdAt) => {
+        const createdDate = new Date(createdAt);
+        const now = new Date();
+        const diffInMs = now - createdDate;
+
+        const diffInSeconds = Math.floor(diffInMs / 1000);
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        const diffInDays = Math.floor(diffInHours / 24);
+
+        if (diffInDays > 0) return `${diffInDays} ngày trước`;
+        if (diffInHours > 0) return `${diffInHours} giờ trước`;
+        if (diffInMinutes > 0) return `${diffInMinutes} phút trước`;
+        return `${diffInSeconds} giây trước`;
+    };
 
     return (
         <View name="wrapper" style={{ marginTop: 16 }}>
@@ -15,7 +30,7 @@ export default function PostItem({ data, openComment, closeComment }) {
                         paddingHorizontal: 10,
                     }}
                 >
-                    <PostInfor isSeen={data.isSeen} image={data.avt} isUrl={false} name={data.name} isStick={data.isStick} />
+                    <PostInfor isSeen={data.isSeen} image={data.author.avt} name={data.author.username} isStick={data.isStick} />
                 </View>
                 <View style={{ width: '100%', marginTop: 10 }}>
                     <Image
@@ -25,7 +40,7 @@ export default function PostItem({ data, openComment, closeComment }) {
                             aspectRatio: 1,
                             resizeMode: 'cover',
                         }}
-                        source={data.contents}
+                        source={{ uri: data.image[0] }}
                     />
                 </View>
                 <View style={{ paddingHorizontal: 10 }}>
@@ -51,24 +66,26 @@ export default function PostItem({ data, openComment, closeComment }) {
                                 style={[styles.flexRow, styles.actionItem]}
                             >
                                 {liked ? <HeartRedIcon /> : <HeartIcon />}
-                                <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{data.like}</Text>
+                                <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{data.likes.length}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.flexRow, styles.actionItem]} onPress={openComment}>
+                            <TouchableOpacity style={[styles.flexRow, styles.actionItem]} onPress={() => {
+                                openComment(data.comments, data._id)
+                            }}>
                                 <CommentIcon />
-                                <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{data.comment}</Text>
+                                <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{data.comments.length}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.flexRow, styles.actionItem]}>
                                 <ReplyIcon />
-                                <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{data.share}</Text>
+                                <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>10</Text>
                             </TouchableOpacity>
                         </View>
                         <SaveIcon />
                     </View>
                     <View style={[styles.flexRow, { marginTop: 5 }]}>
-                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{data.name}</Text>
-                        <Text style={{ marginLeft: 5 }}>{data.cap}</Text>
+                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{data.author.username}</Text>
+                        <Text style={{ marginLeft: 5 }}>{data.content}</Text>
                     </View>
-                    <Text style={{ marginTop: 5, fontSize: 13 }}>{data.time}</Text>
+                    <Text style={{ marginTop: 5, fontSize: 13 }}>{formatTimeDifference(data.createdAt)}</Text>
                 </View>
             </View>
         </View>
