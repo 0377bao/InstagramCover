@@ -1,70 +1,98 @@
-import { View, Text, TouchableWithoutFeedback, Dimensions, ScrollView, TextInput, Image } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableWithoutFeedback, ActivityIndicator, TouchableOpacity, Dimensions, ScrollView, TextInput, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import PostCommentItem from './PostCommentItem';
 import { themeLight } from '../../cssComponents/ColorTheme';
+import axios from 'axios';
 
-const data = [
-    {
-        name: "QuocBao",
-        time: "9 tuần",
-        comment: "Xịn quá",
-        like: 0
-    },
-    {
-        name: "TrongDat",
-        time: "6 ngày",
-        comment: "Trường mình đẹp quá",
-        like: 166
-    },
-    {
-        name: "IT",
-        time: "8 tuần",
-        comment: "Quá đẹp",
-        like: 2
-    },
-    {
-        name: "IT",
-        time: "8 tuần",
-        comment: "Quá đẹp",
-        like: 2
-    },
-    {
-        name: "IT",
-        time: "8 tuần",
-        comment: "Quá đẹp",
-        like: 2
-    },
-    {
-        name: "IT",
-        time: "8 tuần",
-        comment: "Quá đẹp",
-        like: 2
-    },
-    {
-        name: "IT",
-        time: "8 tuần",
-        comment: "Quá đẹp",
-        like: 2
-    },
-    {
-        name: "IT",
-        time: "8 tuần",
-        comment: "Quá đẹp",
-        like: 2
-    },
-]
+// const data = [
+//     {
+//         name: "QuocBao",
+//         time: "9 tuần",
+//         comment: "Xịn quá",
+//         like: 0
+//     },
+//     {
+//         name: "TrongDat",
+//         time: "6 ngày",
+//         comment: "Trường mình đẹp quá",
+//         like: 166
+//     },
+//     {
+//         name: "IT",
+//         time: "8 tuần",
+//         comment: "Quá đẹp",
+//         like: 2
+//     },
+//     {
+//         name: "IT",
+//         time: "8 tuần",
+//         comment: "Quá đẹp",
+//         like: 2
+//     },
+//     {
+//         name: "IT",
+//         time: "8 tuần",
+//         comment: "Quá đẹp",
+//         like: 2
+//     },
+//     {
+//         name: "IT",
+//         time: "8 tuần",
+//         comment: "Quá đẹp",
+//         like: 2
+//     },
+//     {
+//         name: "IT",
+//         time: "8 tuần",
+//         comment: "Quá đẹp",
+//         like: 2
+//     },
+//     {
+//         name: "IT",
+//         time: "8 tuần",
+//         comment: "Quá đẹp",
+//         like: 2
+//     },
+// ]
 
 const theme = themeLight;
 
-export default function PostComment({ closeComment }) {
+export default function PostComment({ closeComment, data }) {
+    const [content, setContent] = useState("");
     const screenHeight = Dimensions.get('window').height;
+    const [loading, setLoading] = useState(false);
+    const [comments, setComments] = useState(data.comments);
+
+    const handSubmitComment = async () => {
+
+        try {
+            setLoading(true);
+            const res = await axios.post("http://10.0.2.2:3001/api/comment/create-comment",
+                {
+                    account: "6746cce7f2e4901625aa7f07",
+                    content: content,
+                    postId: data.id
+                },);
+            setComments([...comments, res.data.data]);
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setContent("");
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        console.log(comments);
+    }, [comments]);
     return (
         <View style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            bottom: 0,
+            bottom: 30,
             backgroundColor: 'rgba(0, 0, 0, 0.5)', // Làm tối phần ngoài comment
             justifyContent: 'flex-end',
             zIndex: 10
@@ -87,7 +115,10 @@ export default function PostComment({ closeComment }) {
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Bình luận</Text>
                 </View>
                 <View style={{ paddingBottom: 76 }}>
-                    <ScrollView showsVerticalScrollIndicator={false}>{data.map((item, index) => <PostCommentItem key={index} data={item} />)}</ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        {comments.map((item, index) => <PostCommentItem key={index} data={item} />)}
+                    </ScrollView>
+                    {loading && <ActivityIndicator />}
                 </View>
             </View>
             <View style={{
@@ -115,7 +146,21 @@ export default function PostComment({ closeComment }) {
                     flex: 1,
                     padding: 10,
                     borderRadius: 20
-                }} placeholder='Nhập bình luận...' />
+                }}
+                    onChangeText={(text) => setContent(text)}
+                    value={content}
+                    placeholder='Nhập bình luận...' />
+                {content && <TouchableOpacity onPress={handSubmitComment} style={{
+                    padding: 5,
+                    borderRadius: 10,
+                    marginLeft: 10
+                }}>
+                    <Text style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        color: 'blue'
+                    }}>Post</Text>
+                </TouchableOpacity>}
             </View>
         </View>
     )

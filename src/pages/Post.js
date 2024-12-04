@@ -33,7 +33,7 @@ export default function Post({ navigation }) {
             formData.append('content', content);
             formData.append('authorId', "67364360c456d45ddcbe223e");
 
-            const res = await axios.post("http://192.168.1.6:3001/api/post/create-post",
+            const res = await axios.post("http://10.0.2.2:3001/api/post/create-post",
                 formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -46,6 +46,7 @@ export default function Post({ navigation }) {
             console.log(error);
         } finally {
             setLoading(false);
+            navigation.navigate("Home");
         }
 
     }

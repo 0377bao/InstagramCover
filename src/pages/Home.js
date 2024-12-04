@@ -49,9 +49,11 @@ export default function Home({ navigation }) {
     const [insideStory, setInsideStory] = useState(false);
     const [showTabBar, setShowTabBar] = useState(true);
     const [insideComment, setInsideComment] = useState(false);
+    const [comment, setComment] = useState(false);
 
-    const openComment = () => {
+    const openComment = (data, id) => {
         setInsideComment(true);
+        setComment({ comments: data, id });
     };
 
     const closeComment = () => {
@@ -82,11 +84,8 @@ export default function Home({ navigation }) {
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <View>
                 <HeaderHome />
-                {insideComment && <PostComment openComment={openComment} closeComment={closeComment} />}
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <StoryHome openStory={openStory} list={listStoryFake} />
-                    <PostHome openComment={openComment} closeComment={closeComment} />
-                </ScrollView>
+                {insideComment && <PostComment data={comment} openComment={openComment} closeComment={closeComment} />}
+                <PostHome headerComponent={<StoryHome openStory={openStory} list={listStoryFake} />} openComment={openComment} closeComment={closeComment} />
             </View>
         </SafeAreaView>
     );

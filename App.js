@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import TabBar from './src/components/GlobalComponent/TabBar';
 import Notification from './src/pages/Notification';
 import Research from './src/pages/Research';
+import { Provider } from 'react-redux';
+import store from './src/app/store';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -13,12 +15,14 @@ export default function App() {
         //   <Text>Open up App.js to start working on your app!</Text>
         //   <StatusBar style="auto" />
         // </View>
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Main" component={TabBar} options={{ headerShown: false }} />
-                <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Main" component={TabBar} options={{ headerShown: false }} />
+                    <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </Provider>
         // <Research />
     );
 }

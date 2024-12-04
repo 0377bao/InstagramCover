@@ -140,7 +140,6 @@ const SreachContext = () => {
                     ListFooterComponent={loading && <ActivityIndicator size="large" color="#0000ff" />}
                     ListFooterComponentStyle={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}
                 />}
-
         </>
     );
 };
